@@ -19,9 +19,9 @@ public abstract class Vehicle {
         return this.garage != null;
     }
 
-    public void enter(final Garage garage) throws NoFreeParkingLotsException {
+    public void enter(final Garage garage) throws NoFreeParkingLotsException, AlreadyInGarageException {
         if (this.isInGarage()) {
-            //TODO add exception
+            throw new AlreadyInGarageException(this.garage);
         } else {
             garage.tryEnter(this);
             this.garage = garage;

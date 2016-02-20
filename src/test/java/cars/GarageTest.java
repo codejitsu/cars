@@ -27,13 +27,42 @@ public class GarageTest {
         final Garage garage = new Garage(10, 100);
         final Vehicle car = new Car();
 
+        Assert.assertFalse(car.isInGarage());
+
         try {
             car.enter(garage);
-        } catch (NoFreeParkingLotsException e) {
+        } catch (final NoFreeParkingLotsException e) {
             Assert.fail("Garage should have free parking slots");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside garage.");
         }
 
         Assert.assertEquals(garage, car.getGarage());
+    }
+
+    @Test
+    public void testVehicleCannotEnterTheSameGarageTwice() {
+        final Garage garage = new Garage(10, 100);
+        final Vehicle car = new Car();
+
+        try {
+            car.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside garage.");
+        }
+
+        Assert.assertTrue(garage.contains(car));
+        Assert.assertEquals(garage, car.getGarage());
+
+        try {
+            car.enter(garage);
+        } catch (final AlreadyInGarageException ise) {
+            Assert.assertEquals(garage, ise.getGarage());
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail();
+        }
     }
 
     @Test
@@ -42,11 +71,14 @@ public class GarageTest {
         final Vehicle car = new Car();
 
         Assert.assertFalse(garage.contains(car));
+        Assert.assertFalse(car.isInGarage());
 
         try {
             car.enter(garage);
         } catch (final NoFreeParkingLotsException e) {
             Assert.fail("Garage should have free parking slots");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside garage.");
         }
 
         Assert.assertTrue(garage.contains(car));
@@ -58,11 +90,14 @@ public class GarageTest {
         final Vehicle car = new Car();
 
         Assert.assertFalse(garage.contains(car));
+        Assert.assertFalse(car.isInGarage());
 
         try {
             car.enter(garage);
         } catch (final NoFreeParkingLotsException e) {
             Assert.fail("Garage should have free parking slots");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside garage.");
         }
 
         Assert.assertTrue(garage.contains(car));
@@ -83,6 +118,8 @@ public class GarageTest {
             car1.enter(garage);
         } catch (final NoFreeParkingLotsException e) {
             Assert.fail("Garage should have free parking slots");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside garage.");
         }
 
         Assert.assertTrue(garage.contains(car1));
@@ -91,6 +128,8 @@ public class GarageTest {
             car2.enter(garage);
         } catch (final NoFreeParkingLotsException e) {
             Assert.fail("Garage should have free parking slots");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside garage.");
         }
 
         Assert.assertTrue(garage.contains(car2));
@@ -100,6 +139,8 @@ public class GarageTest {
         } catch (final NoFreeParkingLotsException e) {
             Assert.assertEquals(2, e.getMaxParkingLotsAvailable());
             Assert.assertEquals(garage, e.getGarage());
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside garage.");
         }
 
         Assert.assertTrue(garage.contains(car1));
@@ -118,6 +159,8 @@ public class GarageTest {
             car1.enter(garage);
         } catch (final NoFreeParkingLotsException e) {
             Assert.fail("Garage should have free parking slots");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside garage.");
         }
 
         Assert.assertEquals(19, garage.getNumberOfFreeParkingSlots());
@@ -127,6 +170,8 @@ public class GarageTest {
         } catch (final NoFreeParkingLotsException e) {
             Assert.fail("Garage should have free parking slots");
             Assert.fail("Garage should have free parking slots");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside garage.");
         }
 
         Assert.assertEquals(18, garage.getNumberOfFreeParkingSlots());
@@ -135,6 +180,8 @@ public class GarageTest {
             car3.enter(garage);
         } catch (final NoFreeParkingLotsException e) {
             Assert.fail("Garage should have free parking slots");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside garage.");
         }
 
         Assert.assertEquals(17, garage.getNumberOfFreeParkingSlots());
