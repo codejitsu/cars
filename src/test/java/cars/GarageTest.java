@@ -9,7 +9,7 @@ import org.junit.Test;
 public class GarageTest {
     @Test
     public void testIsVehicleInGarage() {
-        final Garage garage = new Garage();
+        final Garage garage = new Garage(10, 100);
         final Vehicle car = new Car();
 
         Assert.assertFalse(garage.contains(car));
@@ -27,5 +27,19 @@ public class GarageTest {
         final Garage garage = new Garage(10);
 
         Assert.assertEquals(10, garage.getParkingLevelCount());
+    }
+
+    @Test
+    public void testDefaultGarageParkingSpacesCount() {
+        final Garage garage = new Garage(10, 100);
+
+        Assert.assertEquals(100, garage.getParkingSpacesPerLevel());
+    }
+
+    @Test
+    public void testParkingSpacesPerLevelAreConfigurable() {
+        final Garage garage = new Garage(10, 100);
+
+        Assert.assertEquals(100, garage.getParkingSpacesPerLevel());
     }
 }

@@ -4,15 +4,24 @@ package cars;
  * Represents Garage with vehicles.
  */
 public class Garage {
-    private int parkingLevelCount;
+    private final static int DEFAULT_PARKING_LEVEL_COUNT = 1;
+    private final static int DEFAULT_PARKING_SPACES_PER_LEVEL_COUNT = 100;
 
-    public Garage(final int parkingLevelCount) {
-        //TODO add validation
-        this.parkingLevelCount = parkingLevelCount;
-    }
+    private int parkingLevelCount;
+    private int parkingSpacesPerLevel;
 
     public Garage() {
-        this.parkingLevelCount = 1;
+        this(DEFAULT_PARKING_LEVEL_COUNT, DEFAULT_PARKING_SPACES_PER_LEVEL_COUNT);
+    }
+
+    public Garage(final int parkingLevelCount) {
+        this(parkingLevelCount, DEFAULT_PARKING_SPACES_PER_LEVEL_COUNT);
+    }
+
+    public Garage(final int parkingLevelCount, final int parkingSpacesPerLevel) {
+        //TODO add validation
+        this.parkingLevelCount = parkingLevelCount;
+        this.parkingSpacesPerLevel = parkingSpacesPerLevel;
     }
 
     public boolean contains(final Vehicle vehicle) {
@@ -21,5 +30,9 @@ public class Garage {
 
     public int getParkingLevelCount() {
         return this.parkingLevelCount;
+    }
+
+    public int getParkingSpacesPerLevel() {
+        return this.parkingSpacesPerLevel;
     }
 }
