@@ -16,6 +16,27 @@ public class GarageTest {
     }
 
     @Test
+    public void testGetGarageDefault() {
+        final Vehicle car = new Car();
+
+        Assert.assertNull(car.getGarage());
+    }
+
+    @Test
+    public void testGetGarageAfterEnter() {
+        final Garage garage = new Garage(10, 100);
+        final Vehicle car = new Car();
+
+        try {
+            car.enter(garage);
+        } catch (NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots");
+        }
+
+        Assert.assertEquals(garage, car.getGarage());
+    }
+
+    @Test
     public void testVehicleEnterGarage() {
         final Garage garage = new Garage(10, 100);
         final Vehicle car = new Car();

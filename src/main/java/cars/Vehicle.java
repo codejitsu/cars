@@ -9,14 +9,14 @@ public abstract class Vehicle {
      */
     private final VehicleId vehicleId = VehicleId.createNewId();
 
-    private boolean inGarage = false;
+    private Garage garage;
 
     public VehicleId getVehicleId() {
         return this.vehicleId;
     }
 
     public boolean isInGarage() {
-        return inGarage;
+        return this.garage != null;
     }
 
     public void enter(final Garage garage) throws NoFreeParkingLotsException {
@@ -24,7 +24,7 @@ public abstract class Vehicle {
             //TODO add exception
         } else {
             garage.tryEnter(this);
-            this.inGarage = true;
+            this.garage = garage;
         }
     }
 
@@ -34,7 +34,11 @@ public abstract class Vehicle {
             //TODO add reference to garage
         } else {
             garage.tryExit(this);
-            this.inGarage = true;
+            this.garage = null;
         }
+    }
+
+    public Garage getGarage() {
+        return this.garage;
     }
 }

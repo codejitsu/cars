@@ -12,10 +12,6 @@ public class VehicleId {
         this.id = id;
     }
 
-    public String getId() {
-        return this.id;
-    }
-
     public static VehicleId createNewId() {
         final UUID uuid = UUID.randomUUID();
 
