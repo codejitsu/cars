@@ -28,13 +28,15 @@ public abstract class Vehicle {
         }
     }
 
-    public void exit(final Garage garage) throws NotInGarageException {
+    public void exit(final Garage garage) throws NotInGarageException, InvalidGarageException {
         if (!this.isInGarage()) {
             throw new NotInGarageException(garage);
-        } else {
-            garage.tryExit(this);
-            this.garage = null;
+        } else if (!this.garage.equals(garage)) {
+            throw new InvalidGarageException(this.garage);
         }
+
+        garage.tryExit(this);
+        this.garage = null;
     }
 
     public Garage getGarage() {
