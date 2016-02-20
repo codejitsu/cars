@@ -7,13 +7,19 @@ public abstract class Vehicle {
     /*
      * Unchangable vehicle id.
      */
-    private final VehicleId vehicleId;
+    private final VehicleId vehicleId = VehicleId.createNewId();
 
-    public Vehicle() {
-        this.vehicleId = new VehicleId();
-    }
+    private boolean inGarage = false;
 
     public VehicleId getVehicleId() {
         return this.vehicleId;
+    }
+
+    public boolean isInGarage() {
+        return inGarage;
+    }
+
+    public void setInGarage(final boolean inGarage) {
+        this.inGarage = inGarage;
     }
 }

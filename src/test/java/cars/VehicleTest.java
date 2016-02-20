@@ -15,7 +15,19 @@ public class VehicleTest {
 
     @Test
     public void testVehicleTypeMotorbike() {
-        final Vehicle car = new Motorbike();
-        Assert.assertNotNull(car.getVehicleId());
+        final Vehicle bike = new Motorbike();
+        Assert.assertNotNull(bike.getVehicleId());
+    }
+
+    @Test
+    public void testCarDefaultOutsideGarage() {
+        final Vehicle car = new Car();
+        Assert.assertFalse(car.isInGarage());
+    }
+
+    @Test
+    public void testMotorbikeDefaultOutsideGarage() {
+        final Vehicle bike = new Motorbike();
+        Assert.assertFalse(bike.isInGarage());
     }
 }
