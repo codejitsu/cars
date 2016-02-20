@@ -22,9 +22,68 @@ public class GarageTest {
 
         Assert.assertFalse(garage.contains(car));
 
-        car.enter(garage);
+        try {
+            car.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots");
+        }
 
         Assert.assertTrue(garage.contains(car));
+    }
+
+    @Test
+    public void testVehicleExitGarage() {
+        final Garage garage = new Garage(10, 100);
+        final Vehicle car = new Car();
+
+        Assert.assertFalse(garage.contains(car));
+
+        try {
+            car.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots");
+        }
+
+        Assert.assertTrue(garage.contains(car));
+
+        car.exit(garage);
+
+        Assert.assertFalse(garage.contains(car));
+    }
+
+    @Test
+    public void testGarageShouldCheckAvailablePlaces() {
+        final Garage garage = new Garage(1, 2);
+        final Vehicle car1 = new Car();
+        final Vehicle car2 = new Car();
+        final Vehicle car3 = new Car();
+
+        try {
+            car1.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots");
+        }
+
+        Assert.assertTrue(garage.contains(car1));
+
+        try {
+            car2.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots");
+        }
+
+        Assert.assertTrue(garage.contains(car2));
+
+        try {
+            car3.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.assertEquals(2, e.getMaxParkingLotsAvailable());
+            Assert.assertEquals(garage, e.getGarage());
+        }
+
+        Assert.assertTrue(garage.contains(car1));
+        Assert.assertTrue(garage.contains(car2));
+        Assert.assertFalse(garage.contains(car3));
     }
 
     @Test

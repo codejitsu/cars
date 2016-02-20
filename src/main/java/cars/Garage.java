@@ -10,8 +10,10 @@ public class Garage {
     private final static int DEFAULT_PARKING_LEVEL_COUNT = 1;
     private final static int DEFAULT_PARKING_SPACES_PER_LEVEL_COUNT = 100;
 
-    private int parkingLevelCount;
-    private int parkingSpacesPerLevel;
+    private final int parkingLevelCount;
+    private final int parkingSpacesPerLevel;
+
+    private final int maxParkingPlacesCount;
 
     private Set<VehicleId> cars = new HashSet<>();
 
@@ -27,6 +29,7 @@ public class Garage {
         //TODO add validation
         this.parkingLevelCount = parkingLevelCount;
         this.parkingSpacesPerLevel = parkingSpacesPerLevel;
+        this.maxParkingPlacesCount = parkingLevelCount * parkingSpacesPerLevel;
     }
 
     public boolean contains(final Vehicle vehicle) {
@@ -41,12 +44,26 @@ public class Garage {
         return this.parkingSpacesPerLevel;
     }
 
-    public void trySet(Vehicle vehicle) {
+    public void trySet(final Vehicle vehicle) throws NoFreeParkingLotsException {
         //TODO validation vehicle.isInGarage
         //TODO check available places
+        //TODO add test for available places = av. places - 1
+
+        if (this.maxParkingPlacesCount - this.cars.size() <= 0) {
+            throw new NoFreeParkingLotsException(maxParkingPlacesCount, this);
+        }
 
         if (!this.contains(vehicle)) {
             this.cars.add(vehicle.getVehicleId());
+        }
+    }
+
+    public void tryExit(final Vehicle vehicle) {
+        //TODO validation vehicle.isInGarage
+        //TODO add test for available places = av. places + 1
+
+        if (this.contains(vehicle)) {
+            this.cars.remove(vehicle.getVehicleId());
         }
     }
 }

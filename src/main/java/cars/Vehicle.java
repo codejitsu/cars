@@ -19,11 +19,21 @@ public abstract class Vehicle {
         return inGarage;
     }
 
-    public void enter(final Garage garage) {
+    public void enter(final Garage garage) throws NoFreeParkingLotsException {
         if (this.isInGarage()) {
             //TODO add exception
         } else {
             garage.trySet(this);
+            this.inGarage = true;
+        }
+    }
+
+    public void exit(Garage garage) {
+        if (!this.isInGarage()) {
+            //TODO add exception
+            //TODO add reference to garage
+        } else {
+            garage.tryExit(this);
             this.inGarage = true;
         }
     }
