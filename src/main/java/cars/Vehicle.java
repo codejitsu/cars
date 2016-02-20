@@ -28,10 +28,9 @@ public abstract class Vehicle {
         }
     }
 
-    public void exit(Garage garage) {
+    public void exit(final Garage garage) throws NotInGarageException {
         if (!this.isInGarage()) {
-            //TODO add exception
-            //TODO add reference to garage
+            throw new NotInGarageException(garage);
         } else {
             garage.tryExit(this);
             this.garage = null;
