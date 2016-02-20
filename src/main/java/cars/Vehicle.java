@@ -4,12 +4,27 @@ package cars;
  *  Base class for all vehicle types.
  */
 public abstract class Vehicle {
+    public enum VehicleType {
+        CAR,
+        MOTORBIKE
+    }
+
     /*
      * Unchangable vehicle id.
      */
     private final VehicleId vehicleId = VehicleId.createNewId();
 
+    private VehicleType type;
+
     private Garage garage;
+
+    protected Vehicle(final VehicleType type) {
+        this.type = type;
+    }
+
+    public VehicleType getType() {
+        return type;
+    }
 
     public VehicleId getVehicleId() {
         return this.vehicleId;

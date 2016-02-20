@@ -14,10 +14,23 @@ public class VehicleTest {
     }
 
     @Test
+    public void testTypeCar() {
+        final Vehicle car = new Car();
+        Assert.assertEquals(Vehicle.VehicleType.CAR, car.getType());
+    }
+
+    @Test
     public void testVehicleTypeMotorbike() {
         final Vehicle bike = new Motorbike();
         Assert.assertNotNull(bike.getVehicleId());
     }
+
+    @Test
+    public void testTypeMotorbike() {
+        final Vehicle car = new Motorbike();
+        Assert.assertEquals(Vehicle.VehicleType.MOTORBIKE, car.getType());
+    }
+
 
     @Test
     public void testCarDefaultOutsideGarage() {
