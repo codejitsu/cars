@@ -309,4 +309,27 @@ public class GarageTest {
             Assert.assertEquals(garage1, iga.getGarage());
         }
     }
+
+    @Test
+    public void testAfterEnterEveryVehicleHasALocation() {
+        final Garage garage = new Garage(1, 100);
+        final Vehicle car = new Car();
+
+        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(garage.contains(car));
+
+        Assert.assertNull(garage.getLocation(car.getVehicleId()));
+
+        try {
+            car.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots.");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside.");
+        }
+
+        final VehicleLocation location = garage.getLocation(car.getVehicleId());
+
+        Assert.assertNotNull(location);
+    }
 }
