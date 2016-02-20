@@ -14,4 +14,18 @@ public class GarageTest {
 
         Assert.assertFalse(garage.contains(car));
     }
+
+    @Test
+    public void testByDefaultGarageHasOneParkingLevel() {
+        final Garage garage = new Garage();
+
+        Assert.assertEquals(1, garage.getParkingLevelCount());
+    }
+
+    @Test
+    public void testParkingLevelsAreConfigurable() {
+        final Garage garage = new Garage(10);
+
+        Assert.assertEquals(10, garage.getParkingLevelCount());
+    }
 }
