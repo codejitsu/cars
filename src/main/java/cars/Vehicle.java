@@ -23,7 +23,7 @@ public abstract class Vehicle {
         if (this.isInGarage()) {
             //TODO add exception
         } else {
-            garage.trySet(this);
+            garage.tryEnter(this);
             this.inGarage = true;
         }
     }

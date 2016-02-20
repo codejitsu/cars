@@ -87,6 +87,39 @@ public class GarageTest {
     }
 
     @Test
+    public void testNumberOfFreeParkingSlotsIsQueryable() {
+        final Garage garage = new Garage(1, 20);
+        final Vehicle car1 = new Car();
+        final Vehicle car2 = new Car();
+        final Vehicle car3 = new Car();
+
+        try {
+            car1.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots");
+        }
+
+        Assert.assertEquals(19, garage.getNumberOfFreeParkingSlots());
+
+        try {
+            car2.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots");
+            Assert.fail("Garage should have free parking slots");
+        }
+
+        Assert.assertEquals(18, garage.getNumberOfFreeParkingSlots());
+
+        try {
+            car3.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots");
+        }
+
+        Assert.assertEquals(17, garage.getNumberOfFreeParkingSlots());
+    }
+
+    @Test
     public void testByDefaultGarageHasOneParkingLevel() {
         final Garage garage = new Garage();
 
