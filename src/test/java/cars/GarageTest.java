@@ -332,4 +332,146 @@ public class GarageTest {
 
         Assert.assertNotNull(location);
     }
+
+    @Test
+    public void testVehicleLocation() {
+        final Garage garage = new Garage(1, 5);
+        final Vehicle car = new Car();
+
+        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(garage.contains(car));
+
+        Assert.assertNull(garage.getLocation(car.getVehicleId()));
+
+        try {
+            car.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots.");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside.");
+        }
+
+        final VehicleLocation location = garage.getLocation(car.getVehicleId());
+
+        Assert.assertEquals(garage, location.getGarage());
+        Assert.assertEquals(1, location.getLevel());
+        Assert.assertEquals(0, location.getSpace());
+    }
+
+    @Test
+    public void testVehicleLocationMultipleCars() {
+        final Garage garage = new Garage(1, 5);
+        final Vehicle car1 = new Car();
+        final Vehicle car2 = new Car();
+
+        Assert.assertFalse(car1.isInGarage());
+        Assert.assertFalse(garage.contains(car1));
+
+        Assert.assertNull(garage.getLocation(car1.getVehicleId()));
+
+        try {
+            car1.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots.");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside.");
+        }
+
+        final VehicleLocation location1 = garage.getLocation(car1.getVehicleId());
+
+        Assert.assertEquals(garage, location1.getGarage());
+        Assert.assertEquals(1, location1.getLevel());
+        Assert.assertEquals(0, location1.getSpace());
+
+        Assert.assertFalse(car2.isInGarage());
+        Assert.assertFalse(garage.contains(car2));
+
+        Assert.assertNull(garage.getLocation(car2.getVehicleId()));
+
+        try {
+            car2.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots.");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside.");
+        }
+
+        final VehicleLocation location2 = garage.getLocation(car2.getVehicleId());
+
+        Assert.assertEquals(garage, location2.getGarage());
+        Assert.assertEquals(1, location2.getLevel());
+        Assert.assertEquals(1, location2.getSpace());
+    }
+
+    @Test
+    public void testNewVehicleGetsTheFirstPossibleLocation() {
+        final Garage garage = new Garage(1, 5);
+        final Vehicle car1 = new Car();
+        final Vehicle car2 = new Car();
+        final Vehicle car3 = new Car();
+
+        Assert.assertFalse(car1.isInGarage());
+        Assert.assertFalse(garage.contains(car1));
+
+        Assert.assertNull(garage.getLocation(car1.getVehicleId()));
+
+        try {
+            car1.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots.");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside.");
+        }
+
+        final VehicleLocation location1 = garage.getLocation(car1.getVehicleId());
+
+        Assert.assertEquals(garage, location1.getGarage());
+        Assert.assertEquals(1, location1.getLevel());
+        Assert.assertEquals(0, location1.getSpace());
+
+        Assert.assertFalse(car2.isInGarage());
+        Assert.assertFalse(garage.contains(car2));
+
+        Assert.assertNull(garage.getLocation(car2.getVehicleId()));
+
+        try {
+            car2.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots.");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside.");
+        }
+
+        final VehicleLocation location2 = garage.getLocation(car2.getVehicleId());
+
+        Assert.assertEquals(garage, location2.getGarage());
+        Assert.assertEquals(1, location2.getLevel());
+        Assert.assertEquals(1, location2.getSpace());
+
+        try {
+            car1.exit(garage);
+        } catch (final NotInGarageException e) {
+            Assert.fail("Car should be in garage.");
+        } catch (final InvalidGarageException e) {
+            Assert.fail("Car should be in the right garage.");
+        }
+
+        Assert.assertFalse(car3.isInGarage());
+        Assert.assertFalse(garage.contains(car3));
+
+        Assert.assertNull(garage.getLocation(car3.getVehicleId()));
+
+        try {
+            car3.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots.");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside.");
+        }
+
+        final VehicleLocation location3 = garage.getLocation(car3.getVehicleId());
+
+        Assert.assertNotNull(location3);
+        Assert.assertEquals(location1, location3);
+    }
 }
