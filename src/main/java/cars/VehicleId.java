@@ -21,4 +21,19 @@ public class VehicleId {
 
         return new VehicleId(uuid.toString());
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        VehicleId vehicleId = (VehicleId) o;
+
+        return id != null ? id.equals(vehicleId.id) : vehicleId.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

@@ -19,7 +19,12 @@ public abstract class Vehicle {
         return inGarage;
     }
 
-    public void setInGarage(final boolean inGarage) {
-        this.inGarage = inGarage;
+    public void enter(final Garage garage) {
+        if (this.isInGarage()) {
+            //TODO add exception
+        } else {
+            garage.trySet(this);
+            this.inGarage = true;
+        }
     }
 }

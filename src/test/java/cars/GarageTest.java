@@ -16,6 +16,18 @@ public class GarageTest {
     }
 
     @Test
+    public void testVehicleEnterGarage() {
+        final Garage garage = new Garage(10, 100);
+        final Vehicle car = new Car();
+
+        Assert.assertFalse(garage.contains(car));
+
+        car.enter(garage);
+
+        Assert.assertTrue(garage.contains(car));
+    }
+
+    @Test
     public void testByDefaultGarageHasOneParkingLevel() {
         final Garage garage = new Garage();
 

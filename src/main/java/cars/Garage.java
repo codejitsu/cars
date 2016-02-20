@@ -1,5 +1,8 @@
 package cars;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Represents Garage with vehicles.
  */
@@ -9,6 +12,8 @@ public class Garage {
 
     private int parkingLevelCount;
     private int parkingSpacesPerLevel;
+
+    private Set<VehicleId> cars = new HashSet<>();
 
     public Garage() {
         this(DEFAULT_PARKING_LEVEL_COUNT, DEFAULT_PARKING_SPACES_PER_LEVEL_COUNT);
@@ -25,7 +30,7 @@ public class Garage {
     }
 
     public boolean contains(final Vehicle vehicle) {
-        return false;
+        return cars.contains(vehicle.getVehicleId());
     }
 
     public int getParkingLevelCount() {
@@ -34,5 +39,14 @@ public class Garage {
 
     public int getParkingSpacesPerLevel() {
         return this.parkingSpacesPerLevel;
+    }
+
+    public void trySet(Vehicle vehicle) {
+        //TODO validation vehicle.isInGarage
+        //TODO check available places
+
+        if (!this.contains(vehicle)) {
+            this.cars.add(vehicle.getVehicleId());
+        }
     }
 }
