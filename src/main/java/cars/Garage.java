@@ -44,9 +44,10 @@ public class Garage {
         return this.parkingSpacesPerLevel;
     }
 
-    public void tryEnter(final Vehicle vehicle) throws NoFreeParkingLotsException {
-        //TODO validation vehicle.isInGarage
-        //TODO add test for available places = av. places - 1
+    public void tryEnter(final Vehicle vehicle) throws NoFreeParkingLotsException, AlreadyInGarageException {
+        if (vehicle.isInGarage()) {
+            throw new AlreadyInGarageException(vehicle.getGarage());
+        }
 
         if (this.getNumberOfFreeParkingSlots() == 0) {
             throw new NoFreeParkingLotsException(maxParkingPlacesCount, this);
@@ -57,9 +58,10 @@ public class Garage {
         }
     }
 
-    public void tryExit(final Vehicle vehicle) {
-        //TODO validation vehicle.isInGarage
-        //TODO add test for available places = av. places + 1
+    public void tryExit(final Vehicle vehicle) throws NotInGarageException {
+        if (!vehicle.isInGarage()) {
+           throw new NotInGarageException(this);
+        }
 
         if (this.contains(vehicle)) {
             this.cars.remove(vehicle.getVehicleId());

@@ -101,6 +101,7 @@ public class GarageTest {
         }
 
         Assert.assertTrue(garage.contains(car));
+        Assert.assertEquals(garage, car.getGarage());
 
         try {
             car.exit(garage);
@@ -220,7 +221,7 @@ public class GarageTest {
     }
 
     @Test
-    public void testVehcleCannotExitGarageFromOutside() {
+    public void testVehicleCannotExitGarageFromOutside() {
         final Garage garage = new Garage(10, 100);
         final Vehicle car = new Car();
 
@@ -231,6 +232,46 @@ public class GarageTest {
             car.exit(garage);
         } catch (final NotInGarageException nig) {
             Assert.assertEquals(garage, nig.getGarage());
+        }
+    }
+
+    @Test
+    public void testVehicleTryEnterCheck() {
+        final Garage garage = new Garage(10, 100);
+        final Vehicle car = new Car();
+
+        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(garage.contains(car));
+
+        try {
+            car.enter(garage);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots.");
+        } catch (final AlreadyInGarageException e) {
+            Assert.fail("Vehicle is outside.");
+        }
+
+        try {
+            garage.tryEnter(car);
+        } catch (final NoFreeParkingLotsException e) {
+            Assert.fail("Garage should have free parking slots.");
+        } catch (final AlreadyInGarageException e) {
+            Assert.assertEquals(garage, e.getGarage());
+        }
+    }
+
+    @Test
+    public void testVehicleTryExitCheck() {
+        final Garage garage = new Garage(10, 100);
+        final Vehicle car = new Car();
+
+        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(garage.contains(car));
+
+        try {
+            garage.tryExit(car);
+        } catch (final NotInGarageException nige) {
+            Assert.assertEquals(garage, nige.getGarage());
         }
     }
 }
