@@ -19,5 +19,12 @@ public class GarageServiceTest {
     @Test
     public void testWiring() {
         Assert.assertNotNull(this.garageService);
+        Assert.assertNotNull(this.garageService.getGarage());
+    }
+
+    @Test
+    public void testConfiguration() {
+        Assert.assertEquals(5, this.garageService.getGarage().getParkingLevelCount());
+        Assert.assertEquals(50, this.garageService.getGarage().getParkingSpacesPerLevel());
     }
 }
