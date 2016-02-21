@@ -8,11 +8,11 @@ import java.util.UUID;
 public class VehicleId {
     private final String id;
 
-    private VehicleId(final String id) {
+    public VehicleId(final String id) {
         this.id = id;
     }
 
-    public static VehicleId createNewId() {
+    public static VehicleId createNewRandomId() {
         final UUID uuid = UUID.randomUUID();
 
         return new VehicleId(uuid.toString());

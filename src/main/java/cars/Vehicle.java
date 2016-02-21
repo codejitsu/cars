@@ -17,14 +17,19 @@ public abstract class Vehicle {
     /*
      * Unchangable vehicle id.
      */
-    private final VehicleId vehicleId = VehicleId.createNewId();
+    private final VehicleId vehicleId;
 
     private VehicleType type;
 
     private Garage garage;
 
     protected Vehicle(final VehicleType type) {
-        this.type = type;
+        this(type, VehicleId.createNewRandomId());
+    }
+
+    public Vehicle(final VehicleType vehicleType, final VehicleId vehicleId) {
+        this.type = vehicleType;
+        this.vehicleId = vehicleId;
     }
 
     public VehicleType getType() {
