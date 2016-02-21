@@ -20,6 +20,10 @@ public class GarageServiceImpl implements GarageService {
 
     @Override
     public VehicleLocation enterVehicle(final Vehicle vehicle) throws NoFreeParkingLotsException, AlreadyInGarageException {
+        if (garage.contains(vehicle)) {
+            throw new AlreadyInGarageException(garage);
+        }
+
         vehicle.enter(garage);
         return garage.getLocation(vehicle.getVehicleId());
     }
