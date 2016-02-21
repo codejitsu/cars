@@ -19,6 +19,8 @@ public class GarageRestService {
     }
 
     public VehicleLocation enterVehicle(final String vehicleType, final String vehicleId) throws NoFreeParkingLotsException, AlreadyInGarageException {
+        System.out.println("REST: enterVehicle(" + vehicleType + ", " + vehicleId + ")");
+
         if ("car".equals(vehicleType.toLowerCase())) {
             return this.garageService.enterVehicle(new Car(new VehicleId(vehicleId)));
         } else if ("motorbike".equals(vehicleType.toLowerCase())) {

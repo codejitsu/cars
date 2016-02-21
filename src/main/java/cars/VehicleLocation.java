@@ -8,7 +8,7 @@ public class VehicleLocation {
     private final int level;
     private final int space;
 
-    public VehicleLocation(Garage garage, int level, int space) {
+    public VehicleLocation(final Garage garage, final int level, final int space) {
         this.garage = garage;
         this.level = level;
         this.space = space;
@@ -45,5 +45,9 @@ public class VehicleLocation {
         result = 31 * result + level;
         result = 31 * result + space;
         return result;
+    }
+
+    public SimpleLocation getSimpleLocation() {
+        return new SimpleLocation(this.level, this.space);
     }
 }

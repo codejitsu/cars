@@ -1,10 +1,12 @@
 package cars.app.web;
 
-import cars.VehicleLocation;
+import cars.SimpleLocation;
 import cars.app.service.GarageRestService;
 import cars.exception.AlreadyInGarageException;
 import cars.exception.NoFreeParkingLotsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +29,10 @@ public class GarageController {
 
     @RequestMapping(method = RequestMethod.POST, value = {"/{vehicleType}/{vehicleId}/enter"})
     @ResponseBody
-    public VehicleLocation enterVehicle(@PathVariable String vehicleType,
-                                        @PathVariable String vehicleId) throws NoFreeParkingLotsException,
+    public ResponseEntity<SimpleLocation> enterVehicle(@PathVariable String vehicleType,
+                                                       @PathVariable String vehicleId) throws NoFreeParkingLotsException,
             AlreadyInGarageException {
-        return this.restService.enterVehicle(vehicleType, vehicleId);
+        return new ResponseEntity<>(this.restService.enterVehicle(vehicleType, vehicleId).getSimpleLocation(),
+                HttpStatus.CREATED);
     }
 }
