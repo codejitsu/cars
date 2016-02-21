@@ -1,5 +1,9 @@
 package cars;
 
+import cars.exception.AlreadyInGarageException;
+import cars.exception.InvalidGarageException;
+import cars.exception.NoFreeParkingLotsException;
+import cars.exception.NotInGarageException;
 import junit.framework.Assert;
 import org.junit.Test;
 

@@ -1,4 +1,6 @@
-package cars;
+package cars.exception;
+
+import cars.Garage;
 
 /**
  * In garage there are no more free slots available.

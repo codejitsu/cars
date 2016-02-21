@@ -1,10 +1,12 @@
-package cars;
+package cars.exception;
+
+import cars.Garage;
 
 /**
  * Vehicle tries to exit a different garage.
  */
 public class InvalidGarageException extends GarageException {
-    protected InvalidGarageException(final Garage garage) {
+    public InvalidGarageException(final Garage garage) {
         super(garage);
     }
 }

@@ -1,4 +1,6 @@
-package cars;
+package cars.exception;
+
+import cars.Garage;
 
 /**
  * The base class for all garage exceptions.
@@ -6,7 +8,7 @@ package cars;
 public abstract class GarageException extends Exception {
     private final Garage garage;
 
-    protected GarageException(final Garage garage) {
+    public GarageException(final Garage garage) {
         this.garage = garage;
     }
 

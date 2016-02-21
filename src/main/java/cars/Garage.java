@@ -1,5 +1,9 @@
 package cars;
 
+import cars.exception.AlreadyInGarageException;
+import cars.exception.NoFreeParkingLotsException;
+import cars.exception.NotInGarageException;
+
 import java.util.HashMap;
 import java.util.Map;
 
