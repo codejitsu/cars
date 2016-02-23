@@ -7,6 +7,7 @@ import cars.exception.NoFreeParkingLotsException;
 import cars.exception.NotInGarageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 
 import java.util.Optional;
 
@@ -68,5 +69,9 @@ public class GarageRestService {
         } catch (final NumberFormatException nfe) {
             throw new IllegalArgumentException("vehicleId");
         }
+    }
+
+    public Integer getFreeSlots() {
+        return this.garageService.getGarage().getNumberOfFreeParkingSlots();
     }
 }

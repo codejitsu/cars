@@ -61,4 +61,10 @@ public class GarageController {
             return new ResponseEntity<>((SimpleLocation) null, HttpStatus.NOT_FOUND);
         }
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = {"/free"})
+    @ResponseBody
+    public ResponseEntity<Integer> freeSlots() {
+        return new ResponseEntity<>(this.restService.getFreeSlots(), HttpStatus.OK);
+    }
 }

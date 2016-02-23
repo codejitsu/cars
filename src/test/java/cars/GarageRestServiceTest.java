@@ -123,4 +123,16 @@ public class GarageRestServiceTest {
 
         assertThat(entityEnter.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
+
+    @Test
+    public void testGetFreeSlots() throws Exception {
+        final RestTemplate restTemplateFreeSlots = new TestRestTemplate();
+        final ResponseEntity<Integer> entityEnter = restTemplateFreeSlots.exchange(
+                "http://localhost:" + this.port + "/free", HttpMethod.GET, null,
+                Integer.class);
+
+        assertThat(entityEnter.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(entityEnter.getBody()).isNotNull();
+        assertThat(entityEnter.getBody()).isPositive();
+    }
 }
