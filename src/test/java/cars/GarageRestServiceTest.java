@@ -45,4 +45,27 @@ public class GarageRestServiceTest {
         assertThat(entity.getBody().getLevel()).isEqualTo(1);
         assertThat(entity.getBody().getSpace()).isEqualTo(0);
     }
+
+    @Test
+    public void testExitVehicle() throws Exception {
+        final RestTemplate restTemplateEnter = new TestRestTemplate();
+        final ResponseEntity<SimpleLocation> entityEnter = restTemplateEnter.exchange(
+                "http://localhost:" + this.port + "/car/123456/enter", HttpMethod.POST, null,
+                SimpleLocation.class);
+
+        assertThat(entityEnter.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(entityEnter.getBody()).isNotNull();
+        assertThat(entityEnter.getBody().getLevel()).isEqualTo(1);
+        assertThat(entityEnter.getBody().getSpace()).isEqualTo(1);
+
+        final RestTemplate restTemplateExit = new TestRestTemplate();
+        final ResponseEntity<SimpleLocation> entityExit = restTemplateExit.exchange(
+                "http://localhost:" + this.port + "/car/123456/exit", HttpMethod.POST, null,
+                SimpleLocation.class);
+
+        assertThat(entityExit.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(entityExit.getBody()).isNotNull();
+        assertThat(entityExit.getBody().getLevel()).isEqualTo(1);
+        assertThat(entityExit.getBody().getSpace()).isEqualTo(1);
+    }
 }

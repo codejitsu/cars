@@ -30,6 +30,10 @@ public class GarageServiceImpl implements GarageService {
 
     @Override
     public VehicleLocation exitVehicle(final Vehicle vehicle) throws NotInGarageException, InvalidGarageException {
+        if (!garage.contains(vehicle)) {
+            throw new NotInGarageException(garage);
+        }
+
         final VehicleLocation location = this.garage.getLocation(vehicle.getVehicleId());
 
         vehicle.exit(garage);

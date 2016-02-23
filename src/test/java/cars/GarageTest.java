@@ -20,18 +20,11 @@ public class GarageTest {
     }
 
     @Test
-    public void testGetGarageDefault() {
-        final Vehicle car = new Car();
-
-        Assert.assertNull(car.getGarage());
-    }
-
-    @Test
     public void testGetGarageAfterEnter() {
         final Garage garage = new Garage(10, 100);
         final Vehicle car = new Car();
 
-        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(car.isInGarage(garage));
 
         try {
             car.enter(garage);
@@ -41,7 +34,7 @@ public class GarageTest {
             Assert.fail("Vehicle is outside garage.");
         }
 
-        Assert.assertEquals(garage, car.getGarage());
+        Assert.assertTrue(car.isInGarage(garage));
     }
 
     @Test
@@ -58,7 +51,7 @@ public class GarageTest {
         }
 
         Assert.assertTrue(garage.contains(car));
-        Assert.assertEquals(garage, car.getGarage());
+        Assert.assertTrue(car.isInGarage(garage));
 
         try {
             car.enter(garage);
@@ -75,7 +68,7 @@ public class GarageTest {
         final Vehicle car = new Car();
 
         Assert.assertFalse(garage.contains(car));
-        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(car.isInGarage(garage));
 
         try {
             car.enter(garage);
@@ -94,7 +87,7 @@ public class GarageTest {
         final Vehicle car = new Car();
 
         Assert.assertFalse(garage.contains(car));
-        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(car.isInGarage(garage));
 
         try {
             car.enter(garage);
@@ -105,7 +98,7 @@ public class GarageTest {
         }
 
         Assert.assertTrue(garage.contains(car));
-        Assert.assertEquals(garage, car.getGarage());
+        Assert.assertTrue(car.isInGarage(garage));
 
         try {
             car.exit(garage);
@@ -231,7 +224,7 @@ public class GarageTest {
         final Garage garage = new Garage(10, 100);
         final Vehicle car = new Car();
 
-        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(car.isInGarage(garage));
         Assert.assertFalse(garage.contains(car));
 
         try {
@@ -248,7 +241,7 @@ public class GarageTest {
         final Garage garage = new Garage(10, 100);
         final Vehicle car = new Car();
 
-        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(car.isInGarage(garage));
         Assert.assertFalse(garage.contains(car));
 
         try {
@@ -273,7 +266,7 @@ public class GarageTest {
         final Garage garage = new Garage(10, 100);
         final Vehicle car = new Car();
 
-        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(car.isInGarage(garage));
         Assert.assertFalse(garage.contains(car));
 
         try {
@@ -289,7 +282,7 @@ public class GarageTest {
         final Garage garage2 = new Garage(10, 100);
         final Vehicle car = new Car();
 
-        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(car.isInGarage(garage1));
         Assert.assertFalse(garage1.contains(car));
         Assert.assertFalse(garage2.contains(car));
 
@@ -301,16 +294,15 @@ public class GarageTest {
             Assert.fail("Vehicle is outside.");
         }
 
-        Assert.assertTrue(car.isInGarage());
-        Assert.assertEquals(garage1, car.getGarage());
+        Assert.assertTrue(car.isInGarage(garage1));
         Assert.assertTrue(garage1.contains(car));
 
         try {
             car.exit(garage2);
         } catch (final NotInGarageException e) {
-            Assert.fail("Vehicle is garage.");
-        } catch (final InvalidGarageException iga) {
-            Assert.assertEquals(garage1, iga.getGarage());
+            Assert.assertTrue(true); // as expected
+        } catch (InvalidGarageException e) {
+            Assert.fail();
         }
     }
 
@@ -319,7 +311,7 @@ public class GarageTest {
         final Garage garage = new Garage(1, 100);
         final Vehicle car = new Car();
 
-        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(car.isInGarage(garage));
         Assert.assertFalse(garage.contains(car));
 
         Assert.assertNull(garage.getLocation(car.getVehicleId()));
@@ -342,7 +334,7 @@ public class GarageTest {
         final Garage garage = new Garage(1, 5);
         final Vehicle car = new Car();
 
-        Assert.assertFalse(car.isInGarage());
+        Assert.assertFalse(car.isInGarage(garage));
         Assert.assertFalse(garage.contains(car));
 
         Assert.assertNull(garage.getLocation(car.getVehicleId()));
@@ -368,7 +360,7 @@ public class GarageTest {
         final Vehicle car1 = new Car();
         final Vehicle car2 = new Car();
 
-        Assert.assertFalse(car1.isInGarage());
+        Assert.assertFalse(car1.isInGarage(garage));
         Assert.assertFalse(garage.contains(car1));
 
         Assert.assertNull(garage.getLocation(car1.getVehicleId()));
@@ -387,7 +379,7 @@ public class GarageTest {
         Assert.assertEquals(1, location1.getLevel());
         Assert.assertEquals(0, location1.getSpace());
 
-        Assert.assertFalse(car2.isInGarage());
+        Assert.assertFalse(car2.isInGarage(garage));
         Assert.assertFalse(garage.contains(car2));
 
         Assert.assertNull(garage.getLocation(car2.getVehicleId()));
@@ -414,7 +406,7 @@ public class GarageTest {
         final Vehicle car2 = new Car();
         final Vehicle car3 = new Car();
 
-        Assert.assertFalse(car1.isInGarage());
+        Assert.assertFalse(car1.isInGarage(garage));
         Assert.assertFalse(garage.contains(car1));
 
         Assert.assertNull(garage.getLocation(car1.getVehicleId()));
@@ -433,7 +425,7 @@ public class GarageTest {
         Assert.assertEquals(1, location1.getLevel());
         Assert.assertEquals(0, location1.getSpace());
 
-        Assert.assertFalse(car2.isInGarage());
+        Assert.assertFalse(car2.isInGarage(garage));
         Assert.assertFalse(garage.contains(car2));
 
         Assert.assertNull(garage.getLocation(car2.getVehicleId()));
@@ -460,7 +452,7 @@ public class GarageTest {
             Assert.fail("Car should be in the right garage.");
         }
 
-        Assert.assertFalse(car3.isInGarage());
+        Assert.assertFalse(car3.isInGarage(garage));
         Assert.assertFalse(garage.contains(car3));
 
         Assert.assertNull(garage.getLocation(car3.getVehicleId()));

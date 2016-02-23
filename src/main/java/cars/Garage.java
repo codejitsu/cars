@@ -55,8 +55,8 @@ public class Garage {
     }
 
     public void tryEnter(final Vehicle vehicle) throws NoFreeParkingLotsException, AlreadyInGarageException {
-        if (vehicle.isInGarage()) {
-            throw new AlreadyInGarageException(vehicle.getGarage());
+        if (vehicle.isInGarage(this)) {
+            throw new AlreadyInGarageException(this);
         }
 
         if (this.getNumberOfFreeParkingSlots() == 0) {
@@ -73,7 +73,7 @@ public class Garage {
     }
 
     public void tryExit(final Vehicle vehicle) throws NotInGarageException {
-        if (!vehicle.isInGarage()) {
+        if (!vehicle.isInGarage(this)) {
            throw new NotInGarageException(this);
         }
 

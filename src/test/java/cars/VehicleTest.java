@@ -35,12 +35,16 @@ public class VehicleTest {
     @Test
     public void testCarDefaultOutsideGarage() {
         final Vehicle car = new Car();
-        Assert.assertFalse(car.isInGarage());
+        final Garage garage = new Garage();
+
+        Assert.assertFalse(car.isInGarage(garage));
     }
 
     @Test
     public void testMotorbikeDefaultOutsideGarage() {
         final Vehicle bike = new Motorbike();
-        Assert.assertFalse(bike.isInGarage());
+        final Garage garage = new Garage();
+
+        Assert.assertFalse(bike.isInGarage(garage));
     }
 }

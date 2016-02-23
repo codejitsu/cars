@@ -21,8 +21,6 @@ public abstract class Vehicle {
 
     private VehicleType type;
 
-    private Garage garage;
-
     protected Vehicle(final VehicleType type) {
         this(type, VehicleId.createNewRandomId());
     }
@@ -40,31 +38,23 @@ public abstract class Vehicle {
         return this.vehicleId;
     }
 
-    public boolean isInGarage() {
-        return this.garage != null;
+    public boolean isInGarage(final Garage garage) {
+        return garage.contains(this);
     }
 
     public void enter(final Garage garage) throws NoFreeParkingLotsException, AlreadyInGarageException {
-        if (this.isInGarage()) {
-            throw new AlreadyInGarageException(this.garage);
+        if (this.isInGarage(garage)) {
+            throw new AlreadyInGarageException(garage);
         } else {
             garage.tryEnter(this);
-            this.garage = garage;
         }
     }
 
     public void exit(final Garage garage) throws NotInGarageException, InvalidGarageException {
-        if (!this.isInGarage()) {
+        if (!this.isInGarage(garage)) {
             throw new NotInGarageException(garage);
-        } else if (!this.garage.equals(garage)) {
-            throw new InvalidGarageException(this.garage);
         }
 
         garage.tryExit(this);
-        this.garage = null;
-    }
-
-    public Garage getGarage() {
-        return this.garage;
     }
 }
