@@ -43,7 +43,7 @@ public class GarageRestServiceTest {
         assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(entity.getBody()).isNotNull();
         assertThat(entity.getBody().getLevel()).isEqualTo(1);
-        assertThat(entity.getBody().getSpace()).isEqualTo(0);
+        assertThat(entity.getBody().getSpace()).isNotNegative();
     }
 
     @Test
@@ -56,7 +56,7 @@ public class GarageRestServiceTest {
         assertThat(entityEnter.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(entityEnter.getBody()).isNotNull();
         assertThat(entityEnter.getBody().getLevel()).isEqualTo(1);
-        assertThat(entityEnter.getBody().getSpace()).isEqualTo(1);
+        assertThat(entityEnter.getBody().getSpace()).isNotNegative();
 
         final RestTemplate restTemplateExit = new TestRestTemplate();
         final ResponseEntity<SimpleLocation> entityExit = restTemplateExit.exchange(
@@ -66,6 +66,31 @@ public class GarageRestServiceTest {
         assertThat(entityExit.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(entityExit.getBody()).isNotNull();
         assertThat(entityExit.getBody().getLevel()).isEqualTo(1);
-        assertThat(entityExit.getBody().getSpace()).isEqualTo(1);
+        assertThat(entityExit.getBody().getSpace()).isNotNegative();
+    }
+
+    @Test
+    public void testGetLocation() throws Exception {
+        final RestTemplate restTemplateEnter = new TestRestTemplate();
+        final ResponseEntity<SimpleLocation> entityEnter = restTemplateEnter.exchange(
+                "http://localhost:" + this.port + "/car/1234567/enter", HttpMethod.POST, null,
+                SimpleLocation.class);
+
+        assertThat(entityEnter.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(entityEnter.getBody()).isNotNull();
+        assertThat(entityEnter.getBody().getLevel()).isEqualTo(1);
+        assertThat(entityEnter.getBody().getSpace()).isNotNegative();
+
+        final RestTemplate restTemplateGetLocation = new TestRestTemplate();
+        final ResponseEntity<SimpleLocation> entityLocation = restTemplateGetLocation.exchange(
+                "http://localhost:" + this.port + "/car/1234567/location", HttpMethod.GET, null,
+                SimpleLocation.class);
+
+        assertThat(entityLocation.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(entityLocation.getBody()).isNotNull();
+        assertThat(entityLocation.getBody().getLevel()).isEqualTo(1);
+        assertThat(entityLocation.getBody().getSpace()).isNotNegative();
+
+        assertThat(entityEnter.getBody()).isEqualTo(entityLocation.getBody());
     }
 }

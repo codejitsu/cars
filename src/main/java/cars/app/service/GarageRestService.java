@@ -43,4 +43,14 @@ public class GarageRestService {
 
         return null;
     }
+
+    public VehicleLocation getLocation(final String vehicleType, final String vehicleId) {
+        System.out.println("REST: getLocation(" + vehicleType + ", " + vehicleId + ")");
+
+        if ("car".equals(vehicleType.toLowerCase()) || "motorbike".equals(vehicleType.toLowerCase())) {
+            return this.garageService.getLocation(new VehicleId(vehicleId));
+        }
+
+        return null;
+    }
 }

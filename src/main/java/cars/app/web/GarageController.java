@@ -45,4 +45,12 @@ public class GarageController {
         return new ResponseEntity<>(this.restService.exitVehicle(vehicleType, vehicleId).getSimpleLocation(),
                 HttpStatus.CREATED);
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = {"/{vehicleType}/{vehicleId}/location"})
+    @ResponseBody
+    public ResponseEntity<SimpleLocation> getVehicleLocaton(@PathVariable String vehicleType,
+                                                            @PathVariable String vehicleId) {
+        return new ResponseEntity<>(this.restService.getLocation(vehicleType, vehicleId).getSimpleLocation(),
+                HttpStatus.OK);
+    }
 }

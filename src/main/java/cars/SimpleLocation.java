@@ -30,4 +30,23 @@ public class SimpleLocation {
     public void setLevel(int level) {
         this.level = level;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SimpleLocation that = (SimpleLocation) o;
+
+        if (space != that.space) return false;
+        return level == that.level;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = space;
+        result = 31 * result + level;
+        return result;
+    }
 }
