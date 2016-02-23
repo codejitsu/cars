@@ -93,4 +93,14 @@ public class GarageRestServiceTest {
 
         assertThat(entityEnter.getBody()).isEqualTo(entityLocation.getBody());
     }
+
+    @Test
+    public void testGetLocation404() throws Exception {
+        final RestTemplate restTemplateGetLocation = new TestRestTemplate();
+        final ResponseEntity<SimpleLocation> entityLocation = restTemplateGetLocation.exchange(
+                "http://localhost:" + this.port + "/car/1/location", HttpMethod.GET, null,
+                SimpleLocation.class);
+
+        assertThat(entityLocation.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
 }

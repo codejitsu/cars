@@ -1,6 +1,7 @@
 package cars.app.web;
 
 import cars.SimpleLocation;
+import cars.VehicleLocation;
 import cars.app.service.GarageRestService;
 import cars.exception.AlreadyInGarageException;
 import cars.exception.InvalidGarageException;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Optional;
 
 /**
  * Garage app controller.
@@ -50,7 +53,12 @@ public class GarageController {
     @ResponseBody
     public ResponseEntity<SimpleLocation> getVehicleLocaton(@PathVariable String vehicleType,
                                                             @PathVariable String vehicleId) {
-        return new ResponseEntity<>(this.restService.getLocation(vehicleType, vehicleId).getSimpleLocation(),
-                HttpStatus.OK);
+        final Optional<VehicleLocation> location = this.restService.getLocation(vehicleType, vehicleId);
+
+        if (location.isPresent()) {
+            return new ResponseEntity<>(location.get().getSimpleLocation(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>((SimpleLocation) null, HttpStatus.NOT_FOUND);
+        }
     }
 }

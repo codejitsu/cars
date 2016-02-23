@@ -8,6 +8,8 @@ import cars.exception.NotInGarageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 /**
  * Garage REST endpoint.
  */
@@ -44,13 +46,13 @@ public class GarageRestService {
         return null;
     }
 
-    public VehicleLocation getLocation(final String vehicleType, final String vehicleId) {
+    public Optional<VehicleLocation> getLocation(final String vehicleType, final String vehicleId) {
         System.out.println("REST: getLocation(" + vehicleType + ", " + vehicleId + ")");
 
         if ("car".equals(vehicleType.toLowerCase()) || "motorbike".equals(vehicleType.toLowerCase())) {
-            return this.garageService.getLocation(new VehicleId(vehicleId));
+            return Optional.ofNullable(this.garageService.getLocation(new VehicleId(vehicleId)));
         }
 
-        return null;
+        return Optional.empty();
     }
 }
