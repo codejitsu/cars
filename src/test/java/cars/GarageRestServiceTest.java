@@ -103,4 +103,24 @@ public class GarageRestServiceTest {
 
         assertThat(entityLocation.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
+
+    @Test
+    public void test401InvalidVehicleType() throws Exception {
+        final RestTemplate restTemplateEnter = new TestRestTemplate();
+        final ResponseEntity<SimpleLocation> entityEnter = restTemplateEnter.exchange(
+                "http://localhost:" + this.port + "/test/1234567/enter", HttpMethod.POST, null,
+                SimpleLocation.class);
+
+        assertThat(entityEnter.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void test401InvalidVehicleNumber() throws Exception {
+        final RestTemplate restTemplateEnter = new TestRestTemplate();
+        final ResponseEntity<SimpleLocation> entityEnter = restTemplateEnter.exchange(
+                "http://localhost:" + this.port + "/motorbike/test/enter", HttpMethod.POST, null,
+                SimpleLocation.class);
+
+        assertThat(entityEnter.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
 }

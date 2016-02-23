@@ -37,4 +37,10 @@ class GlobalControllerExceptionHandler {
     public void handleNotInGarage() {
         // Nothing to do
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public void handleIllegalArgument() {
+        // Nothing to do
+    }
 }
