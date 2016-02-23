@@ -18,25 +18,26 @@ mvn spring-boot:run
 
 * Enter vehicle: returns new vehicle location in garage with 201 (CREATED), or 409 (CONFLICT) if the vehicle already in garage. 
 
+```sh
+curl -X POST localhost:8080/car/1/enter -v
 
-    curl -X POST localhost:8080/car/1/enter -v
-    
-    *   Trying ::1...
-    * Connected to localhost (::1) port 8080 (#0)
-    > POST /car/1/enter HTTP/1.1
-    > Host: localhost:8080
-    > User-Agent: curl/7.43.0
-    > Accept: */*
-    >
-    < HTTP/1.1 201 Created
-    < Server: Apache-Coyote/1.1
-    < Content-Type: application/json;charset=UTF-8
-    < Transfer-Encoding: chunked
-    < Date: Tue, 23 Feb 2016 07:34:06 GMT
-    <
-    * Connection #0 to host localhost left intact
-    
-    {"space":0,"level":1}
+*   Trying ::1...
+* Connected to localhost (::1) port 8080 (#0)
+> POST /car/1/enter HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.43.0
+> Accept: */*
+>
+< HTTP/1.1 201 Created
+< Server: Apache-Coyote/1.1
+< Content-Type: application/json;charset=UTF-8
+< Transfer-Encoding: chunked
+< Date: Tue, 23 Feb 2016 07:34:06 GMT
+<
+* Connection #0 to host localhost left intact
+
+{"space":0,"level":1}
+```    
     
 * Exit vehicle: returns old vehicle location in garage with 201 (CREATED), or 409 (CONFLICT) if the vehicle already left garage. 
 
